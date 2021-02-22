@@ -1,9 +1,3 @@
-<style>
-    img {
-        width: 200px;
-    }
-</style>
-
 # Peer-net 
 Peer-to-peer communication without internet
 
@@ -17,13 +11,11 @@ hotspot) and connect with them.
 - [x] Recieve message on another device
 
 ##### Screenshots
-<div>
-    <img src="./assets/screenshots/client.jpeg">
-    <img src="./assets/screenshots/host3.jpeg">
-    <img src="./assets/screenshots/host2.jpeg">
-    <img src="./assets/screenshots/host1.jpeg">
-    <img src="./assets/screenshots/host4.jpeg">
-</div>
+<img src="/assets/screenshots/client.jpeg" width="200"/>
+<img src="/assets/screenshots/host3.jpeg" width="200"/>
+<img src="/assets/screenshots/host2.jpeg" width="200"/>
+<img src="/assets/screenshots/host1.jpeg" width="200"/>
+<img src="/assets/screenshots/host4.jpeg" width="200"/>
 
 #### Current Bugs
 - App crashes sometimes while sending message
