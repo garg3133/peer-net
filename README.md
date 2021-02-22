@@ -11,11 +11,9 @@ hotspot) and connect with them.
 - [x] Recieve message on another device
 
 ##### Screenshots
-<img src="/assets/screenshots/client.jpeg" width="200"/>
-<img src="/assets/screenshots/host3.jpeg" width="200"/>
-<img src="/assets/screenshots/host2.jpeg" width="200"/>
-<img src="/assets/screenshots/host1.jpeg" width="200"/>
-<img src="/assets/screenshots/host4.jpeg" width="200"/>
+Discovery started         | Device found               | Devices connected and message sent | Message Received          | Devices disconnected 
+:-------------------------:|:-------------------------:|:----------------------------------:|:-------------------------:|:-------------------------:
+![](/assets/screenshots/host3.jpeg)  | ![](/assets/screenshots/host2.jpeg) | ![](/assets/screenshots/client.jpeg) | ![](/assets/screenshots/host1.jpeg) | ![](/assets/screenshots/host4.jpeg)
 
 #### Current Bugs
 - App crashes sometimes while sending message
