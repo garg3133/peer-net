@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int SERVICE_UNREGISTERED = 4;
     private static final int DISCOVERY_STARTED = 5;
     private static final int DISCOVERY_STOPPED = 6;
+    private static final int CONNECTED_AS_SERVER = 7;
+    private static final int CONNECTED_AS_CLIENT = 8;
     private int REQUEST_FINE_LOCATION = 1;
     Button btnOnOff, btnDiscover, btnSend;
     ListView listView;
@@ -120,11 +122,19 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case DISCOVERY_STARTED:
                     btnDiscover.setText("Stop Discovery");
+                    connectionStatus.setText("Discovery started.");
                     IS_DEVICE_NSD_DISCOVERY_ON = true;
                     break;
                 case DISCOVERY_STOPPED:
                     btnDiscover.setText("Start Discovery");
+                    connectionStatus.setText("Discovery stopped.");
                     IS_DEVICE_NSD_DISCOVERY_ON = false;
+                    break;
+                case CONNECTED_AS_SERVER:
+                    connectionStatus.setText("Connected as server.");
+                    break;
+                case CONNECTED_AS_CLIENT:
+                    connectionStatus.setText("Connected as client.");
                     break;
             }
             return true;
@@ -411,6 +421,7 @@ public class MainActivity extends AppCompatActivity {
             try {
 //                serverSocket = new ServerSocket(8081);
                 socket = serverSocket.accept();
+                handler.obtainMessage(CONNECTED_AS_SERVER).sendToTarget();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (IOException e) {
@@ -477,6 +488,7 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             try {
                 socket.connect(new InetSocketAddress(remoteAddress, remotePort), 500);
+                handler.obtainMessage(CONNECTED_AS_CLIENT).sendToTarget();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             } catch (IOException e) {
