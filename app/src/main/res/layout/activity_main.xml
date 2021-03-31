@@ -1,90 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activites.MainActivity">
 
-    <Button
-        android:id="@+id/onOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="55dp"
-        android:text="@string/turn_on_visibility" />
-
-    <Button
-        android:id="@+id/discover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/onOff"
-        android:layout_alignBottom="@+id/onOff"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/onOff"
-        android:text="@string/start_discovery"
-        android:layout_marginStart="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_toEndOf="@+id/onOff"
-        android:layout_marginEnd="14dp" />
-
-
-    <ListView
-        android:id="@+id/peerListView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/onOff"
-        android:layout_marginTop="25dp"
-        android:background="@android:color/holo_orange_light" />
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/row_conversation">
 
-    <TextView
-        android:id="@+id/readMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/peerListView"
-        android:layout_marginTop="31dp"
-        android:text="@string/message"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="italic" />
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@+id/writeMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_toStartOf="@+id/sendButton" />
-
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="Send" />
-
-    <TextView
-        android:id="@+id/connectionStatus"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:text="Connection Status"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="18sp"
-        android:textStyle="italic" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu">
 
-</RelativeLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</androidx.constraintlayout.widget.ConstraintLayout>
