@@ -26,6 +26,8 @@
 
     <!-- Buttons -->
     <string name="go_to_settings_button">Go to Settings</string>
+    <string name="toggle_visibility_button">Toggle Visibility</string>
+    <string name="set_username_button">Next</string>
     <string name="send_button">Send</string>
     <string name="back_button">Back</string>
     <string name="record_button">Start recording</string>
@@ -37,7 +39,7 @@
     <string name="go_to_settings_text">Click the image above to go to Settings and connect your device to others by Wifi-Direct</string>
 
     <!-- EditTexts -->
-    <string name="set_chat_name">Please choose your chat name</string>
+    <string name="set_chat_name">Please enter your username</string>
     <string name="enter_text">Enter your message here</string>
 
     <!-- Descriptions -->

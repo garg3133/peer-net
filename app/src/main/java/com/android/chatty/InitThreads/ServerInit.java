@@ -12,11 +12,21 @@ import com.android.chatty.MainActivity;
 
 public class ServerInit extends Thread{
 	private static final String TAG = "ServerInit";
-	private static final int SERVER_PORT = 8888;
+	private static int SERVER_PORT;
 	public static ArrayList<InetAddress> clients;
 	private ServerSocket serverSocket;
-	public ServerInit(){
+	public ServerInit() {
 		clients = new ArrayList<InetAddress>();
+		try {
+			serverSocket = new ServerSocket(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SERVER_PORT = serverSocket.getLocalPort();
+	}
+
+	public int getServerPort() {
+		return SERVER_PORT;
 	}
 
 	@Override
@@ -24,7 +34,7 @@ public class ServerInit extends Thread{
 		clients.clear();
 
 		try {
-			serverSocket = new ServerSocket(SERVER_PORT);
+//			serverSocket = new ServerSocket(SERVER_PORT);
 			// Collect client ip's
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();

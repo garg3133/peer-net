@@ -9,10 +9,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ClientInit extends Thread{
-	private static final int SERVER_PORT = 8888;
+	private int serverPort;
 	private InetAddress mServerAddr;
-	public ClientInit(InetAddress serverAddr){
+	public ClientInit(InetAddress serverAddr, int port){
 		mServerAddr = serverAddr;
+		serverPort = port;
 	}
 
 	@Override
@@ -20,8 +21,8 @@ public class ClientInit extends Thread{
 		Socket socket = new Socket();
 		try {
 			socket.bind(null);
-			socket.connect(new InetSocketAddress(mServerAddr, SERVER_PORT),500);
-			socket.close();
+			socket.connect(new InetSocketAddress(mServerAddr, serverPort),500);
+//			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

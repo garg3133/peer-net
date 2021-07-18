@@ -79,10 +79,10 @@ public class ChatActivity extends Activity {
 	private static final int SHARE_TEXT = 104;
 	private static final int REQUEST_PERMISSIONS_REQUIRED = 7;
 
-	private WifiP2pManager mManager;
-	private Channel mChannel;
-	private WifiDirectBroadcastReceiver mReceiver;
-	private IntentFilter mIntentFilter;
+//	private WifiP2pManager mManager;
+//	private Channel mChannel;
+//	private WifiDirectBroadcastReceiver mReceiver;
+//	private IntentFilter mIntentFilter;
 	private EditText edit;
 	private static ListView listView;
 	private static List<Message> listMessage;
@@ -97,10 +97,10 @@ public class ChatActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 
-		mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        mChannel = mManager.initialize(this, getMainLooper(), null);
-        mReceiver = WifiDirectBroadcastReceiver.createInstance();
-        mReceiver.setmActivity(this);
+//		mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+//        mChannel = mManager.initialize(this, getMainLooper(), null);
+//        mReceiver = WifiDirectBroadcastReceiver.createInstance();
+//        mReceiver.setmActivity(this);
 
 		String[] PERMISSIONS = {
 				Manifest.permission.CAMERA,
@@ -113,11 +113,11 @@ public class ChatActivity extends Activity {
 			ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSIONS_REQUIRED);
 		}
 
-        mIntentFilter = new IntentFilter();
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+//        mIntentFilter = new IntentFilter();
+//        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+//        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+//        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+//        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
         //Start the service to receive message
         startService(new Intent(this, MessageService.class));
@@ -173,27 +173,27 @@ public class ChatActivity extends Activity {
 	@Override
     public void onResume() {
         super.onResume();
-        registerReceiver(mReceiver, mIntentFilter);
-
-		mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
-
-			@Override
-			public void onSuccess() {
-				Log.v(TAG, "Discovery process succeeded");
-			}
-
-			@Override
-			public void onFailure(int reason) {
-				Log.v(TAG, "Discovery process failed");
-			}
-		});
+//        registerReceiver(mReceiver, mIntentFilter);
+//
+//		mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+//
+//			@Override
+//			public void onSuccess() {
+//				Log.v(TAG, "Discovery process succeeded");
+//			}
+//
+//			@Override
+//			public void onFailure(int reason) {
+//				Log.v(TAG, "Discovery process failed");
+//			}
+//		});
 		saveStateForeground(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(mReceiver);
+//        unregisterReceiver(mReceiver);
         saveStateForeground(false);
     }
 
@@ -375,16 +375,16 @@ public class ChatActivity extends Activity {
 
 //		Log.e(TAG, "Start AsyncTasks to send the message");
 
-		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
-			Log.e(TAG, "Message hydrated, start SendMessageServer AsyncTask");
-
-			new SendMessageServer(ChatActivity.this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
-		}
-		else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
-			Log.e(TAG, "Message hydrated, start SendMessageClient AsyncTask");
-
-			new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
-		}
+//		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
+//			Log.e(TAG, "Message hydrated, start SendMessageServer AsyncTask");
+//
+//			new SendMessageServer(ChatActivity.this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
+//		}
+//		else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
+//			Log.e(TAG, "Message hydrated, start SendMessageClient AsyncTask");
+//
+//			new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
+//		}
 
 		edit.setText("");
 	}
