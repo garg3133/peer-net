@@ -11,14 +11,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    ShowInfoActivity activity;
+    DialogViewActivity activity;
     private ServerSocket serverSocket;
     private String self_ip_address;
     private int self_port;
     User user;
     private boolean stop = false;
 
-    public Server(ShowInfoActivity activity, String self_ip_address, int self_port) {
+    public Server(DialogViewActivity activity, String self_ip_address, int self_port) {
         this.activity = activity;
         this.self_port = self_port;
         this.self_ip_address = self_ip_address;

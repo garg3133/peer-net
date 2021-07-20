@@ -3,11 +3,14 @@ package com.example.chatfull;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.nsd.NsdManager;
+import android.net.nsd.NsdServiceInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +23,18 @@ import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.dialogs.DialogsList;
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 public class DialogViewActivity extends AppCompatActivity
         implements DialogsListAdapter.OnDialogClickListener<Dialog> {
+
+    public static final String TAG = "DialogViewActivity";
 
     private static final int SHOW_INFO = 100;
     private static final int ENTER_INFO = 200;
@@ -54,6 +63,13 @@ public class DialogViewActivity extends AppCompatActivity
     TextView overlay;
 
     String image;
+
+    NsdManager nsdManager;
+    NsdManager.RegistrationListener registrationListener;
+
+    String localServiceName;
+    private static final int SERVER_PORT = 8080;
+    private Server myServer;
 
 
     @Override
@@ -99,6 +115,10 @@ public class DialogViewActivity extends AppCompatActivity
         loaded = false;
         saved = false;
         dialogArrayList = new ArrayList<>();
+
+        initializeRegistrationListener();
+
+        nsdManager = (NsdManager) this.getSystemService(Context.NSD_SERVICE);
 
     }
 
@@ -171,11 +191,25 @@ public class DialogViewActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 if (view == fabShowInfo) {
-                    Intent intent = new Intent(getApplicationContext(), ShowInfoActivity.class);
-                    startActivityForResult(intent, SHOW_INFO);
+//                    Intent intent = new Intent(getApplicationContext(), ShowInfoActivity.class);
+//                    startActivityForResult(intent, SHOW_INFO);
+                    Log.d(TAG, fabShowInfo.getLabelText());
+                    if (fabShowInfo.getLabelText().equals("Turn on visibility")) {
+                        myServer = new Server(DialogViewActivity.this, getSelfIpAddress(), SERVER_PORT);
+                        registerService(SERVER_PORT);
+                    } else {
+                        myServer.onDestroy();
+                        nsdManager.unregisterService(registrationListener);
+                        Log.d(TAG, "Service unregistered");
+                    }
+
+
                 } else if (view == fabEnterInfo) {
-                    Intent intent = new Intent(getApplicationContext(), ConnectToUserActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), FindPeers.class);
+                    intent.putExtra("localServiceName", localServiceName);
                     startActivityForResult(intent, ENTER_INFO);
+//                } else if (view == fabFindPeer) {
+
                 }
                 fam.close(true);
             }
@@ -213,5 +247,110 @@ public class DialogViewActivity extends AppCompatActivity
         intent.putExtra("user", dialog.getUsers().get(0));
         intent.putExtra("dialog", dialog);
         startActivity(intent);
+    }
+
+    public void setConnected(User user) {
+        Intent data = new Intent();
+        data.putExtra("user",user);
+        setResult(RESULT_OK,data);
+        finish();
+    }
+
+    public void registerService(int port) {
+        // Create the NsdServiceInfo object, and populate it.
+        NsdServiceInfo serviceInfo = new NsdServiceInfo();
+
+        // The name is subject to change based on conflicts
+        // with other services advertised on the same network.
+        serviceInfo.setServiceName(me.getName() + " peernet");
+        serviceInfo.setServiceType("_peernet._tcp");
+        serviceInfo.setPort(port);
+
+        nsdManager.registerService(
+                serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
+
+    }
+
+    public void initializeRegistrationListener() {
+        registrationListener = new NsdManager.RegistrationListener() {
+
+            @Override
+            public void onServiceRegistered(NsdServiceInfo NsdServiceInfo) {
+                // Save the service name. Android may have changed it in order to
+                // resolve a conflict, so update the name you initially requested
+                // with the name Android actually used.
+                localServiceName = NsdServiceInfo.getServiceName();
+                Log.d(TAG, "Registered Service Name: " + localServiceName);
+                Toast.makeText(DialogViewActivity.this, "Service registered.", Toast.LENGTH_SHORT).show();
+//				handler.obtainMessage(SERVICE_REGISTERED).sendToTarget();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        (DialogViewActivity.this).fabShowInfo.setLabelText("Turn off visibility");
+                    }
+                });
+            }
+
+            @Override
+            public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                // Registration failed! Put debugging code here to determine why.
+                Log.e(TAG, "Registration failed: " + errorCode);
+                Toast.makeText(DialogViewActivity.this, "Service registration failed.", Toast.LENGTH_SHORT).show();
+//				toggleVisibility.setOnCheckedChangeListener(null);
+//                toggleVisibility.setChecked(false);
+//				toggleVisibility.setOnCheckedChangeListener(this);
+            }
+
+            @Override
+            public void onServiceUnregistered(NsdServiceInfo arg0) {
+                // Service has been unregistered. This only happens when you call
+                // NsdManager.unregisterService() and pass in this listener.
+                Log.e(TAG, "Service unregistered.");
+                Toast.makeText(DialogViewActivity.this, "Service unregistered.", Toast.LENGTH_SHORT).show();
+//				handler.obtainMessage(SERVICE_UNREGISTERED).sendToTarget();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        (DialogViewActivity.this).fabShowInfo.setLabelText("Turn on visibility");
+                    }
+                });
+            }
+
+            @Override
+            public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                // Unregistration failed. Put debugging code here to determine why.
+                Log.e(TAG, "Un-registration failed: " + errorCode);
+                Toast.makeText(DialogViewActivity.this, "Service un-registration failed.", Toast.LENGTH_SHORT).show();
+//                toggleVisibility.setChecked(true);
+            }
+        };
+    }
+
+    // Returns device IP Address
+    public static String getSelfIpAddress() {
+        String self_ip = "";
+        try {
+            Enumeration<NetworkInterface> enumNetworkInterfaces = NetworkInterface
+                    .getNetworkInterfaces();
+            while (enumNetworkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = enumNetworkInterfaces
+                        .nextElement();
+                Enumeration<InetAddress> enumInetAddress = networkInterface
+                        .getInetAddresses();
+                while (enumInetAddress.hasMoreElements()) {
+                    InetAddress inetAddress = enumInetAddress
+                            .nextElement();
+
+                    if (inetAddress.isSiteLocalAddress()) {
+                        self_ip = inetAddress.getHostAddress();
+                    }
+                }
+            }
+
+        } catch (SocketException e) {
+            e.printStackTrace();
+            Log.e("GET_IP", "IP NOT FOUND");
+        }
+        return self_ip;
     }
 }

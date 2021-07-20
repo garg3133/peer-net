@@ -49,7 +49,7 @@ public class ShowInfoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        myServer = new Server(this, getSelfIpAddress(), getSelfPort());
+//        myServer = new Server(this, getSelfIpAddress(), getSelfPort());
     }
 
     @Override

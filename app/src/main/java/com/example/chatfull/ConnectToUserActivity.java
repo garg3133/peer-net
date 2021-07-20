@@ -84,7 +84,7 @@ public class ConnectToUserActivity extends AppCompatActivity{
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(portInput.getWindowToken(), 0);
         progressOverlay.setVisibility(View.VISIBLE);
-        myClient = new Client(ipInput.getText().toString(), Integer.parseInt(portInput.getText().toString()), this);
+//        myClient = new Client(ipInput.getText().toString(), Integer.parseInt(portInput.getText().toString()), this);
         myClient.execute();
     }
 

@@ -13,13 +13,13 @@ import java.net.Socket;
 
 public class Client extends AsyncTask<Void, Void, String> {
 
-    ConnectToUserActivity activity;
+    FindPeers activity;
     private String dstAddress, serverResponse = "";
     private int dstPort;
     private Socket clientSocket = null;
     User user;
 
-    Client(String dstAddress, int dstPort, ConnectToUserActivity activity) {
+    Client(String dstAddress, int dstPort, FindPeers activity) {
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
         this.activity = activity;
@@ -75,7 +75,7 @@ public class Client extends AsyncTask<Void, Void, String> {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                activity.progressOverlay.setVisibility(View.INVISIBLE);
+//                activity.progressOverlay.setVisibility(View.INVISIBLE);
                 Toast.makeText(activity.getApplicationContext(), serverResponse, Toast.LENGTH_LONG).show();
             }
         });

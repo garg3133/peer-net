@@ -78,8 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_information"
-            fab:fab_label="Show Info"
 
+            fab:fab_label="Turn on visibility"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_keyboard"
-            fab:fab_label="Enter IP:PORT"
+            fab:fab_label="Find Peers"
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
