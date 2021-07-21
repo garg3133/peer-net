@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChatFull</string>
+    <string name="app_name">Peernet</string>
     <string name="title_activity_message_list">MessageListActivity</string>
     <string name="color_title">Pick a Color</string>
 </resources>

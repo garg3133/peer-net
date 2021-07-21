@@ -5,7 +5,8 @@
 
     <item
         android:id="@+id/background_button"
-        android:title="Change Background"
         android:icon="@drawable/ic_rgb"
-        app:showAsAction="ifRoom"/>
+        android:title="Change Background"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -12,20 +12,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/colorPurpleLight"
+        android:background="#3165EA"
         android:theme="@style/ToolbarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/overlay"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Chats"/>
+        app:title="Peernet" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eeeeee"
+        android:background="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@+id/dialogsList"
         tools:layout_editor_absoluteX="-2dp" />
 
@@ -46,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="You Don't Have any Friends Yet\nConnect with friends to start chatting"
+        android:text="Connect with people to start chatting"
         android:fontFamily="@font/sanfran"/>
 
     <com.github.clans.fab.FloatingActionMenu
@@ -54,24 +52,28 @@
         android:id="@+id/fab_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:layout_alignParentBottom="true"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        fab:menu_fab_label=""
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         fab:fab_colorNormal="@color/colorPurpleLight"
         fab:fab_colorPressed="@color/colorPurpleDark"
         fab:fab_colorRipple="#99FFFFFF"
+        fab:fab_shadowColor="#66000000"
         fab:fab_showShadow="true"
+        fab:menu_fab_label=""
         fab:menu_labels_colorPressed="#444444"
         fab:menu_labels_colorRipple="#66FFFFFF"
-        fab:menu_labels_showShadow="true"
+        fab:menu_labels_ellipsize="end"
         fab:menu_labels_maxLines="-1"
         fab:menu_labels_position="left"
-        fab:menu_openDirection="up"
-        fab:fab_shadowColor="#66000000"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_singleLine="true">
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="true"
+        fab:menu_openDirection="up">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/showInfoFab"
