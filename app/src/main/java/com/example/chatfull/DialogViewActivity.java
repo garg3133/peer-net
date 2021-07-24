@@ -250,10 +250,21 @@ public class DialogViewActivity extends AppCompatActivity
     }
 
     public void setConnected(User user) {
-        Intent data = new Intent();
-        data.putExtra("user",user);
-        setResult(RESULT_OK,data);
-        finish();
+        Dialog dialog = dialogsAdapter.getItemById(user.getName());
+        if (dialog == null) {
+            dialog = new Dialog(user.getName(), user.getName(), image, new ArrayList<User>(Arrays.asList(user)), null, 0);
+            dialogsAdapter.addItem(0, dialog);
+
+//                    dialogArrayList = new ArrayList<>();
+            dialogArrayList.add(dialog);
+
+            String jsonDataStringDialog = gson.toJson(dialogArrayList);
+            editorDialog.putString(SHARED_PREFERENCES_KEY_DIALOG, jsonDataStringDialog);
+            editorDialog.commit();
+
+            overlay.setVisibility(View.INVISIBLE);
+        }
+        onDialogClick(dialog);
     }
 
     public void registerService(int port) {
